@@ -109,6 +109,18 @@ class Donor {
         return rows;
     }
     
+    /**
+     * Verify a donor (admin action)
+     * @param {number} donorId - Donor ID
+     * @returns {Promise<boolean>} - True if verified successfully
+     */
+    static async verifyDonor(donorId) {
+        const [result] = await pool.execute(
+            'UPDATE donors SET verified = TRUE WHERE id = ?',
+            [donorId]
+        );
+        return result.affectedRows > 0;
+    }
 }
 
 module.exports = Donor;
