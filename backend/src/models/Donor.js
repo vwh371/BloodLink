@@ -39,6 +39,20 @@ class Donor {
         return rows[0];
     }
     
+    /**
+     * Update donor's availability status
+     * @param {number} userId - User ID
+     * @param {boolean} isAvailable - New availability status
+     * @returns {Promise<boolean>} - True if updated successfully
+     */
+    static async updateAvailability(userId, isAvailable) {
+        const [result] = await pool.execute(
+            'UPDATE donors SET is_available = ? WHERE user_id = ?',
+            [isAvailable, userId]
+        );
+        return result.affectedRows > 0;
+    }
+    
 }
 
 module.exports = Donor;
