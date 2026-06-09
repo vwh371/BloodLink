@@ -39,6 +39,19 @@ class User {
         return rows[0];
     }
     
-}
+    /**
+     * Find user by ID
+     * @param {number} id - User ID
+     * @returns {Promise<Object>} - User object without password
+     */
+    static async findById(id) {
+        // Exclude password from results for security
+        const [rows] = await pool.execute(
+            'SELECT id, name, email, phone, user_type, is_active, created_at FROM users WHERE id = ?',
+            [id]
+        );
+        return rows[0];
+    }
+  }
 
 module.exports = User;
