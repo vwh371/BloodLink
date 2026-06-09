@@ -25,4 +25,20 @@ class User {
         );
         return result.insertId;
     }
-  }
+    
+    /**
+     * Find user by email (used for login)
+     * @param {string} email - User's email address
+     * @returns {Promise<Object>} - User object or null
+     */
+    static async findByEmail(email) {
+        const [rows] = await pool.execute(
+            'SELECT * FROM users WHERE email = ?',
+            [email]
+        );
+        return rows[0];
+    }
+    
+}
+
+module.exports = User;
