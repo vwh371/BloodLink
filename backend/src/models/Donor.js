@@ -22,6 +22,23 @@ class Donor {
         return result.insertId;
     }
     
+    /**
+     * Find donor profile by user ID
+     * @param {number} userId - User ID
+     * @returns {Promise<Object>} - Donor profile with user details
+     */
+    static async findByUserId(userId) {
+        // Join with users table to get name, email, phone
+        const [rows] = await pool.execute(
+            `SELECT d.*, u.name, u.email, u.phone 
+             FROM donors d 
+             JOIN users u ON d.user_id = u.id 
+             WHERE d.user_id = ?`,
+            [userId]
+        );
+        return rows[0];
+    }
+    
 }
 
 module.exports = Donor;
