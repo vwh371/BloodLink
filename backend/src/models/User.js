@@ -1,45 +1,28 @@
-import mongoose from 'mongoose';
+/**
+ * User Model
+ * Handles all database operations related to users
+ */
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: [true, 'Please provide a name'],
-      trim: true
-    },
-    email: {
-      type: String,
-      required: [true, 'Please provide an email'],
-      unique: true,
-      lowercase: true,
-      match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email']
-    },
-    password: {
-      type: String,
-      required: [true, 'Please provide a password'],
-      minlength: 8,
-      select: false
-    },
-    role: {
-      type: String,
-      enum: ['donor', 'patient', 'admin'],
-      default: 'donor'
-    },
-    phone: {
-      type: String,
-      required: false
-    },
-    bloodType: {
-      type: String,
-      enum: ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'],
-      required: false
-    },
-    isActive: {
-      type: Boolean,
-      default: true
+const { pool } = require('../config/database');
+const bcrypt = require('bcryptjs');
+
+class User {
+    /**
+     * Create a new user
+     * @param {Object} userData - User registration data
+     * @returns {Promise<number>} - New user's ID
+     */
+    static async create(userData) {
+        const { name, email, password, phone, user_type } = userData;
+        
+        // Hash password for security (never store plain text passwords)
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        // Insert user into database
+        const [result] = await pool.execute(
+            'INSERT INTO users (name, email, password, phone, user_type) VALUES (?, ?, ?, ?, ?)',
+            [name, email, hashedPassword, phone, user_type || 'patient']
+        );
+        return result.insertId;
     }
-  },
-  { timestamps: true }
-);
-
-export default mongoose.model('User', userSchema);
+  }
