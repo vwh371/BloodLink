@@ -9,20 +9,24 @@
     "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["blood-donation", "health"],
+  "keywords": [
+    "blood-donation",
+    "health"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
-    "dotenv": "^16.0.3",
-    "cors": "^2.8.5",
-    "mongodb": "^5.0.0",
-    "mongoose": "^7.0.0",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
-    "express-validator": "^7.0.0"
+    "mongodb": "^5.0.0",
+    "mongoose": "^7.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.5.0",
     "nodemon": "^2.0.22"
   }
 }
