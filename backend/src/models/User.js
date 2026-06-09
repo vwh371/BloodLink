@@ -52,6 +52,16 @@ class User {
         );
         return rows[0];
     }
-  }
+    
+    /**
+     * Verify user password
+     * @param {string} plainPassword - Password from login form
+     * @param {string} hashedPassword - Stored hashed password
+     * @returns {Promise<boolean>} - True if password matches
+     */
+    static async verifyPassword(plainPassword, hashedPassword) {
+        return await bcrypt.compare(plainPassword, hashedPassword);
+    }
+}
 
 module.exports = User;
