@@ -94,6 +94,21 @@ class Donor {
         return rows;
     }
     
+    /**
+     * Get all verified donors (for admin)
+     * @returns {Promise<Array>} - List of all donors
+     */
+    static async getAllDonors() {
+        const [rows] = await pool.execute(
+            `SELECT d.*, u.name, u.email, u.phone 
+             FROM donors d 
+             JOIN users u ON d.user_id = u.id 
+             WHERE d.verified = 1
+             ORDER BY d.created_at DESC`
+        );
+        return rows;
+    }
+    
 }
 
 module.exports = Donor;
