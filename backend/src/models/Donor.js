@@ -94,6 +94,33 @@ class Donor {
         return rows;
     }
     
+    /**
+     * Get all verified donors (for admin)
+     * @returns {Promise<Array>} - List of all donors
+     */
+    static async getAllDonors() {
+        const [rows] = await pool.execute(
+            `SELECT d.*, u.name, u.email, u.phone 
+             FROM donors d 
+             JOIN users u ON d.user_id = u.id 
+             WHERE d.verified = 1
+             ORDER BY d.created_at DESC`
+        );
+        return rows;
+    }
+    
+    /**
+     * Verify a donor (admin action)
+     * @param {number} donorId - Donor ID
+     * @returns {Promise<boolean>} - True if verified successfully
+     */
+    static async verifyDonor(donorId) {
+        const [result] = await pool.execute(
+            'UPDATE donors SET verified = TRUE WHERE id = ?',
+            [donorId]
+        );
+        return result.affectedRows > 0;
+    }
 }
 
 module.exports = Donor;
