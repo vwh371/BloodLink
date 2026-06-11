@@ -39,6 +39,18 @@ class BloodRequest {
         return rows[0];
     }
     
+    /**
+     * Find requests by patient ID
+     */
+    static async findByPatientId(patientId) {
+        const [rows] = await pool.execute(
+            `SELECT * FROM blood_requests 
+             WHERE patient_id = ? 
+             ORDER BY request_date DESC`,
+            [patientId]
+        );
+        return rows;
+    }
     
 }
 
