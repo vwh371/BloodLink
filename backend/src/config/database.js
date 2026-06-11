@@ -75,6 +75,25 @@ const initDatabase = async () => {
             )
         `);
         
+        // Blood requests table
+        await promisePool.execute(`
+            CREATE TABLE IF NOT EXISTS blood_requests (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                patient_id INT,
+                blood_group ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NOT NULL,
+                urgency ENUM('normal', 'urgent', 'critical') DEFAULT 'normal',
+                units_needed INT DEFAULT 1,
+                location_lat DECIMAL(10, 8),
+                location_lng DECIMAL(11, 8),
+                hospital_name VARCHAR(200),
+                patient_name VARCHAR(100),
+                contact_phone VARCHAR(15),
+                request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                status ENUM('pending', 'matched', 'fulfilled', 'cancelled') DEFAULT 'pending',
+                description TEXT,
+                FOREIGN KEY (patient_id) REFERENCES users(id)
+            )
+        `);
         
         console.log('✅ Database tables ready');
     } catch (error) {
