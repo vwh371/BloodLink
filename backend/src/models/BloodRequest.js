@@ -52,6 +52,17 @@ class BloodRequest {
         return rows;
     }
     
+    /**
+     * Update request status
+     */
+    static async updateStatus(requestId, status) {
+        const [result] = await pool.execute(
+            'UPDATE blood_requests SET status = ? WHERE id = ?',
+            [status, requestId]
+        );
+        return result.affectedRows > 0;
+    }
+    
 }
 
 module.exports = BloodRequest;
