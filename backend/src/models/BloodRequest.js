@@ -63,6 +63,19 @@ class BloodRequest {
         return result.affectedRows > 0;
     }
     
+    /**
+     * Get all pending requests
+     */
+    static async getPendingRequests() {
+        const [rows] = await pool.execute(
+            `SELECT r.*, u.name as requester_name
+             FROM blood_requests r
+             JOIN users u ON r.patient_id = u.id
+             WHERE r.status = 'pending'
+             ORDER BY FIELD(r.urgency, 'critical', 'urgent', 'normal'), r.request_date ASC`
+        );
+        return rows;
+    }
 }
 
 module.exports = BloodRequest;
