@@ -28,6 +28,18 @@ class BloodRequest {
         return result.insertId;
     }
     
+    /**
+     * Find request by ID
+     */
+    static async findById(id) {
+        const [rows] = await pool.execute(
+            `SELECT * FROM blood_requests WHERE id = ?`,
+            [id]
+        );
+        return rows[0];
+    }
+    
+    
 }
 
 module.exports = BloodRequest;
