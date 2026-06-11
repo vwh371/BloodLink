@@ -1,21 +1,21 @@
-import mongoose from 'mongoose';
+/**
+ * Database Configuration Module
+ * Handles MySQL connection pool, table creation, and database initialization
+ */
 
-export const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-    return conn;
-  } catch (error) {
-    console.error(`Error connecting to MongoDB: ${error.message}`);
-    process.exit(1);
-  }
-};
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
+const bcrypt = require('bcryptjs');
 
-export const disconnectDB = async () => {
-  try {
-    await mongoose.disconnect();
-    console.log('MongoDB Disconnected');
-  } catch (error) {
-    console.error(`Error disconnecting from MongoDB: ${error.message}`);
-  }
-};
+dotenv.config();
+
+// Create MySQL connection pool
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
