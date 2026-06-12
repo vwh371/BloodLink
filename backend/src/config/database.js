@@ -96,6 +96,20 @@ const initDatabase = async () => {
             )
         `);
         
+        // Request matches table for AI recommendations
+        await promisePool.execute(`
+            CREATE TABLE IF NOT EXISTS request_matches (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                request_id INT,
+                donor_id INT,
+                match_score DECIMAL(5, 2),
+                notified BOOLEAN DEFAULT FALSE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (request_id) REFERENCES blood_requests(id) ON DELETE CASCADE,
+                FOREIGN KEY (donor_id) REFERENCES donors(id)
+            )
+        `);
+        
     } catch (error) {
         console.error('Database init error:', error.message);
     }
