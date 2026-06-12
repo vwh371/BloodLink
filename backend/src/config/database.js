@@ -110,6 +110,22 @@ const initDatabase = async () => {
             )
         `);
         
+        // Create default admin user
+        const [adminExists] = await promisePool.execute(
+            'SELECT * FROM users WHERE email = ?',
+            ['admin@bloodlink.com']
+        );
+        
+        if (adminExists.length === 0) {
+            const hashedPassword = await bcrypt.hash('Admin@123', 10);
+            await promisePool.execute(
+                'INSERT INTO users (name, email, password, phone, user_type) VALUES (?, ?, ?, ?, ?)',
+                ['System Admin', 'admin@bloodlink.com', hashedPassword, '9999999999', 'admin']
+            );
+            console.log('✅ Admin created: admin@bloodlink.com / Admin@123');
+        }
+        
+        console.log('✅ Database tables ready');
     } catch (error) {
         console.error('Database init error:', error.message);
     }
