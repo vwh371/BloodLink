@@ -21,3 +21,19 @@ const pool = mysql.createPool({
 });
 
 const promisePool = pool.promise();
+
+/**
+ * Test database connection
+ */
+const testConnection = async () => {
+    try {
+        const connection = await promisePool.getConnection();
+        console.log('✅ MySQL Database connected');
+        connection.release();
+        return true;
+    } catch (error) {
+        console.error('❌ Database connection failed:', error.message);
+        return false;
+    }
+};
+
