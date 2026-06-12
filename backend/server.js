@@ -19,7 +19,16 @@ const startServer = async () => {
     // Initialize database tables if they don't exist
     await initDatabase();
     
-   );
+    // Start Express server
+    app.listen(PORT, () => {
+        console.log('═══════════════════════════════════════');
+        console.log('🩸  BloodLink AI Backend Server');
+        console.log('═══════════════════════════════════════');
+        console.log(`🚀 Server running on port ${PORT}`);
+        console.log(`📍 API: http://localhost:${PORT}`);
+        console.log(`🗺️  Google Maps API: Enabled`);
+        console.log('═══════════════════════════════════════');
+    });
 };
 
 startServer();
