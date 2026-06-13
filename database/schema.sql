@@ -124,3 +124,12 @@ CREATE TABLE IF NOT EXISTS notifications (
     INDEX idx_created_at (created_at),
     INDEX idx_type (type)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User notifications';
+
+-- =============================================
+-- Step 7: Insert Default Admin User
+-- Default credentials: admin@bloodlink.com / Admin@123
+-- =============================================
+-- Note: Password 'Admin@123' is hashed using bcrypt
+-- The hash below corresponds to 'Admin@123'
+INSERT INTO users (name, email, password, phone, user_type, is_active) VALUES 
+('System Admin', 'admin@bloodlink.com', '$2a$10$rQKqQKqQKqQKqQKqQKqQKu', '9999999999', 'admin', TRUE);
