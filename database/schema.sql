@@ -105,3 +105,22 @@ CREATE TABLE IF NOT EXISTS request_matches (
     INDEX idx_match_score (match_score),
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI-generated donor matches';
+
+-- =============================================
+-- Step 6: Notifications Table
+-- Stores user notifications
+-- =============================================
+CREATE TABLE IF NOT EXISTS notifications (
+    id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique notification ID',
+    user_id INT COMMENT 'User receiving notification',
+    title VARCHAR(100) COMMENT 'Notification title',
+    message TEXT COMMENT 'Notification content',
+    type ENUM('request', 'match', 'reminder', 'system', 'emergency') DEFAULT 'system' COMMENT 'Notification type',
+    is_read BOOLEAN DEFAULT FALSE COMMENT 'Whether notification was read',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Notification timestamp',
+    
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_user_read (user_id, is_read),
+    INDEX idx_created_at (created_at),
+    INDEX idx_type (type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User notifications';
