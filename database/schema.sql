@@ -133,3 +133,42 @@ CREATE TABLE IF NOT EXISTS notifications (
 -- The hash below corresponds to 'Admin@123'
 INSERT INTO users (name, email, password, phone, user_type, is_active) VALUES 
 ('System Admin', 'admin@bloodlink.com', '$2a$10$rQKqQKqQKqQKqQKqQKqQKu', '9999999999', 'admin', TRUE);
+
+-- =============================================
+-- Step 8: Insert Sample Donors (For Testing)
+-- =============================================
+
+-- Sample Donor 1: O+ Blood Group in Connaught Place, Delhi
+INSERT INTO users (name, email, password, phone, user_type, is_active) VALUES 
+('Rajesh Kumar', 'rajesh@example.com', '$2a$10$rQKqQKqQKqQKqQKqQKqQKu', '9876543210', 'donor', TRUE);
+
+INSERT INTO donors (user_id, blood_group, latitude, longitude, address, city, state, pincode, is_available, verified) VALUES 
+(2, 'O+', 28.6139, 77.2090, 'Connaught Place, New Delhi', 'New Delhi', 'Delhi', '110001', TRUE, TRUE);
+
+-- Sample Donor 2: A+ Blood Group in Karol Bagh, Delhi
+INSERT INTO users (name, email, password, phone, user_type, is_active) VALUES 
+('Priya Sharma', 'priya@example.com', '$2a$10$rQKqQKqQKqQKqQKqQKqQKu', '9876543211', 'donor', TRUE);
+
+INSERT INTO donors (user_id, blood_group, latitude, longitude, address, city, state, pincode, is_available, verified) VALUES 
+(3, 'A+', 28.6529, 77.1903, 'Karol Bagh, New Delhi', 'New Delhi', 'Delhi', '110005', TRUE, TRUE);
+
+-- Sample Donor 3: B+ Blood Group in Rajouri Garden, Delhi
+INSERT INTO users (name, email, password, phone, user_type, is_active) VALUES 
+('Amit Patel', 'amit@example.com', '$2a$10$rQKqQKqQKqQKqQKqQKqQKu', '9876543212', 'donor', TRUE);
+
+INSERT INTO donors (user_id, blood_group, latitude, longitude, address, city, state, pincode, is_available, verified) VALUES 
+(4, 'B+', 28.6456, 77.1198, 'Rajouri Garden, New Delhi', 'New Delhi', 'Delhi', '110027', TRUE, TRUE);
+
+-- Sample Donor 4: AB- Blood Group (Rare) in South Delhi
+INSERT INTO users (name, email, password, phone, user_type, is_active) VALUES 
+('Neha Gupta', 'neha@example.com', '$2a$10$rQKqQKqQKqQKqQKqQKqQKu', '9876543213', 'donor', TRUE);
+
+INSERT INTO donors (user_id, blood_group, latitude, longitude, address, city, state, pincode, is_available, verified) VALUES 
+(5, 'AB-', 28.5562, 77.2590, 'Saket, New Delhi', 'New Delhi', 'Delhi', '110017', TRUE, TRUE);
+
+-- Sample Donor 5: O- Blood Group (Universal Donor) in Noida
+INSERT INTO users (name, email, password, phone, user_type, is_active) VALUES 
+('Vikram Singh', 'vikram@example.com', '$2a$10$rQKqQKqQKqQKqQKqQKqQKu', '9876543214', 'donor', TRUE);
+
+INSERT INTO donors (user_id, blood_group, latitude, longitude, address, city, state, pincode, is_available, verified) VALUES 
+(6, 'O-', 28.5355, 77.3910, 'Sector 18, Noida', 'Noida', 'Uttar Pradesh', '201301', TRUE, TRUE);
