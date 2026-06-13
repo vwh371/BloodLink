@@ -172,3 +172,15 @@ INSERT INTO users (name, email, password, phone, user_type, is_active) VALUES
 
 INSERT INTO donors (user_id, blood_group, latitude, longitude, address, city, state, pincode, is_available, verified) VALUES 
 (6, 'O-', 28.5355, 77.3910, 'Sector 18, Noida', 'Noida', 'Uttar Pradesh', '201301', TRUE, TRUE);
+
+-- =============================================
+-- Step 9: Insert Sample Blood Requests (For Testing)
+-- =============================================
+
+-- Sample Request 1: Critical emergency request
+INSERT INTO blood_requests (patient_id, blood_group, urgency, units_needed, location_lat, location_lng, hospital_name, patient_name, contact_phone, status, description) VALUES 
+(1, 'O+', 'critical', 2, 28.6139, 77.2090, 'AIIMS Hospital', 'Patient Name', '9999999999', 'pending', 'Emergency surgery required. Need blood immediately.');
+
+-- Sample Request 2: Urgent request
+INSERT INTO blood_requests (patient_id, blood_group, urgency, units_needed, location_lat, location_lng, hospital_name, patient_name, contact_phone, status, description) VALUES 
+(1, 'A+', 'urgent', 1, 28.6529, 77.1903, 'Sir Ganga Ram Hospital', 'Patient Name', '9999999999', 'pending', 'Urgent blood required for surgery tomorrow.');
