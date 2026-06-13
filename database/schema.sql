@@ -195,3 +195,26 @@ INSERT INTO notifications (user_id, title, message, type, is_read) VALUES
 (4, 'Welcome to BloodLink AI', 'Thank you for registering as a donor. You can now save lives!', 'system', FALSE),
 (5, 'Welcome to BloodLink AI', 'Thank you for registering as a donor. You can now save lives!', 'system', FALSE),
 (6, 'Welcome to BloodLink AI', 'Thank you for registering as a donor. You can now save lives!', 'system', FALSE);
+
+-- =============================================
+-- Step 11: Create Useful Views
+-- =============================================
+
+-- View: Active Donors with Location
+CREATE OR REPLACE VIEW active_donors_view AS
+SELECT 
+    d.id,
+    u.name,
+    u.email,
+    u.phone,
+    d.blood_group,
+    d.latitude,
+    d.longitude,
+    d.address,
+    d.city,
+    d.is_available,
+    d.donation_count,
+    d.created_at
+FROM donors d
+JOIN users u ON d.user_id = u.id
+WHERE d.is_available = TRUE AND d.verified = TRUE;
