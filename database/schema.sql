@@ -184,3 +184,14 @@ INSERT INTO blood_requests (patient_id, blood_group, urgency, units_needed, loca
 -- Sample Request 2: Urgent request
 INSERT INTO blood_requests (patient_id, blood_group, urgency, units_needed, location_lat, location_lng, hospital_name, patient_name, contact_phone, status, description) VALUES 
 (1, 'A+', 'urgent', 1, 28.6529, 77.1903, 'Sir Ganga Ram Hospital', 'Patient Name', '9999999999', 'pending', 'Urgent blood required for surgery tomorrow.');
+
+-- =============================================
+-- Step 10: Insert Sample Notifications
+-- =============================================
+
+INSERT INTO notifications (user_id, title, message, type, is_read) VALUES 
+(2, 'Welcome to BloodLink AI', 'Thank you for registering as a donor. You can now save lives!', 'system', FALSE),
+(3, 'Welcome to BloodLink AI', 'Thank you for registering as a donor. You can now save lives!', 'system', FALSE),
+(4, 'Welcome to BloodLink AI', 'Thank you for registering as a donor. You can now save lives!', 'system', FALSE),
+(5, 'Welcome to BloodLink AI', 'Thank you for registering as a donor. You can now save lives!', 'system', FALSE),
+(6, 'Welcome to BloodLink AI', 'Thank you for registering as a donor. You can now save lives!', 'system', FALSE);
