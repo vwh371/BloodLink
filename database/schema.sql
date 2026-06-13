@@ -218,3 +218,15 @@ SELECT
 FROM donors d
 JOIN users u ON d.user_id = u.id
 WHERE d.is_available = TRUE AND d.verified = TRUE;
+
+-- View: Pending Requests with Patient Details
+CREATE OR REPLACE VIEW pending_requests_view AS
+SELECT 
+    r.*,
+    u.name as patient_name,
+    u.email as patient_email,
+    u.phone as patient_phone
+FROM blood_requests r
+JOIN users u ON r.patient_id = u.id
+WHERE r.status = 'pending'
+ORDER BY FIELD(r.urgency, 'critical', 'urgent', 'normal'), r.request_date ASC;
