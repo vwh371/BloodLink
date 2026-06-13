@@ -56,3 +56,30 @@ CREATE TABLE IF NOT EXISTS donors (
     INDEX idx_location (latitude, longitude),
     INDEX idx_city (city)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Donor profiles with location data';
+
+-- =============================================
+-- Step 4: Blood Requests Table
+-- Stores blood requests from patients
+-- =============================================
+CREATE TABLE IF NOT EXISTS blood_requests (
+    id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique request ID',
+    patient_id INT COMMENT 'Reference to requester user',
+    blood_group ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NOT NULL COMMENT 'Required blood type',
+    urgency ENUM('normal', 'urgent', 'critical') DEFAULT 'normal' COMMENT 'Request priority level',
+    units_needed INT DEFAULT 1 COMMENT 'Number of blood units required',
+    location_lat DECIMAL(10, 8) COMMENT 'Request location latitude',
+    location_lng DECIMAL(11, 8) COMMENT 'Request location longitude',
+    hospital_name VARCHAR(200) COMMENT 'Hospital name where blood is needed',
+    patient_name VARCHAR(100) COMMENT 'Patient name',
+    contact_phone VARCHAR(15) COMMENT 'Contact number for coordination',
+    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Request creation timestamp',
+    status ENUM('pending', 'matched', 'fulfilled', 'cancelled') DEFAULT 'pending' COMMENT 'Request status',
+    description TEXT COMMENT 'Additional details or medical notes',
+    
+    FOREIGN KEY (patient_id) REFERENCES users(id),
+    INDEX idx_blood_group (blood_group),
+    INDEX idx_status (status),
+    INDEX idx_urgency (urgency),
+    INDEX idx_request_date (request_date),
+    INDEX idx_location (location_lat, location_lng)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Blood requests from patients';
