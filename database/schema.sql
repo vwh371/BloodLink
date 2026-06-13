@@ -230,3 +230,15 @@ FROM blood_requests r
 JOIN users u ON r.patient_id = u.id
 WHERE r.status = 'pending'
 ORDER BY FIELD(r.urgency, 'critical', 'urgent', 'normal'), r.request_date ASC;
+
+-- View: Donor Statistics
+CREATE OR REPLACE VIEW donor_statistics_view AS
+SELECT 
+    blood_group,
+    COUNT(*) as total_donors,
+    SUM(CASE WHEN is_available = TRUE THEN 1 ELSE 0 END) as available_donors,
+    SUM(donation_count) as total_donations,
+    AVG(donation_count) as avg_donations
+FROM donors
+WHERE verified = TRUE
+GROUP BY blood_group;
