@@ -283,3 +283,20 @@ BEGIN
     ORDER BY distance_km ASC;
 END //
 DELIMITER ;
+
+-- =============================================
+-- Step 13: Create Triggers
+-- =============================================
+
+-- Trigger: Update donor count when new donor registered
+DELIMITER //
+CREATE TRIGGER after_donor_insert
+AFTER INSERT ON donors
+FOR EACH ROW
+BEGIN
+    INSERT INTO notifications (user_id, title, message, type)
+    VALUES (NEW.user_id, 'Donor Profile Created', 
+            'Your donor profile has been created successfully. Please wait for admin verification.', 
+            'system');
+END //
+DELIMITER ;
