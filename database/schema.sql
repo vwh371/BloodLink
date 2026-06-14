@@ -319,3 +319,16 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
+-- =============================================
+-- Step 14: Display Setup Summary
+-- =============================================
+SELECT 'Database Setup Complete!' as Status;
+SELECT 
+    (SELECT COUNT(*) FROM users) as Total_Users,
+    (SELECT COUNT(*) FROM donors) as Total_Donors,
+    (SELECT COUNT(*) FROM blood_requests) as Total_Requests;
+
+-- =============================================
+-- End of Schema
+-- =============================================
