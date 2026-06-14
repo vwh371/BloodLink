@@ -300,3 +300,22 @@ BEGIN
             'system');
 END //
 DELIMITER ;
+
+-- Trigger: Notify on critical blood request
+DELIMITER //
+CREATE TRIGGER after_critical_request_insert
+AFTER INSERT ON blood_requests
+FOR EACH ROW
+BEGIN
+    IF NEW.urgency = 'critical' THEN
+        INSERT INTO notifications (user_id, title, message, type)
+        SELECT user_id, 'Critical Blood Request', 
+               CONCAT('URGENT: Blood needed for ', NEW.blood_group, ' type at ', NEW.hospital_name),
+               'emergency'
+        FROM donors 
+        WHERE blood_group = NEW.blood_group 
+        AND is_available = TRUE 
+        AND verified = TRUE;
+    END IF;
+END //
+DELIMITER ;
