@@ -242,3 +242,18 @@ SELECT
 FROM donors
 WHERE verified = TRUE
 GROUP BY blood_group;
+
+-- =============================================
+-- Step 12: Create Stored Procedures
+-- =============================================
+
+-- Procedure: Update donor availability based on last donation date
+DELIMITER //
+CREATE PROCEDURE UpdateDonorAvailability()
+BEGIN
+    UPDATE donors 
+    SET is_available = TRUE 
+    WHERE last_donation_date <= DATE_SUB(CURDATE(), INTERVAL 90 DAY)
+    AND is_available = FALSE;
+END //
+DELIMITER ;
