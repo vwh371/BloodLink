@@ -257,3 +257,29 @@ BEGIN
     AND is_available = FALSE;
 END //
 DELIMITER ;
+
+-- Procedure: Get nearby donors
+DELIMITER //
+CREATE PROCEDURE GetNearbyDonors(
+    IN p_lat DECIMAL(10, 8),
+    IN p_lng DECIMAL(11, 8),
+    IN p_radius_km INT,
+    IN p_blood_group VARCHAR(5)
+)
+BEGIN
+    SELECT 
+        d.*, u.name, u.email, u.phone,
+        (6371 * acos(cos(radians(p_lat)) * cos(radians(d.latitude)) 
+        * cos(radians(d.longitude) - radians(p_lng)) + sin(radians(p_lat)) 
+        * sin(radians(d.latitude)))) AS distance_km
+    FROM donors d
+    JOIN users u ON d.user_id = u.id
+    WHERE d.is_available = 1 
+        AND d.verified = 1
+        AND (p_blood_group IS NULL OR d.blood_group = p_blood_group)
+        AND (6371 * acos(cos(radians(p_lat)) * cos(radians(d.latitude)) 
+        * cos(radians(d.longitude) - radians(p_lng)) + sin(radians(p_lat)) 
+        * sin(radians(d.latitude)))) <= p_radius_km
+    ORDER BY distance_km ASC;
+END //
+DELIMITER ;
