@@ -51,3 +51,21 @@ exports.getNearbyDonorsOnMap = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+/**
+ * Convert address to coordinates
+ */
+exports.geocodeAddress = async (req, res) => {
+    try {
+        const { address } = req.body;
+        const result = await GoogleMapsService.geocodeAddress(address);
+        
+        if (result.success) {
+            res.json({ success: true, data: result });
+        } else {
+            res.status(404).json({ error: result.error });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
