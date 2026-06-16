@@ -69,3 +69,21 @@ exports.geocodeAddress = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+/**
+ * Calculate distance between donor and requester
+ */
+exports.calculateDonorDistance = async (req, res) => {
+    try {
+        const { donor_lat, donor_lng, requester_lat, requester_lng } = req.query;
+        
+        const result = await GoogleMapsService.calculateDistance(
+            parseFloat(donor_lat), parseFloat(donor_lng),
+            parseFloat(requester_lat), parseFloat(requester_lng)
+        );
+        
+        res.json({ success: true, data: result });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
