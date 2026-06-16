@@ -90,3 +90,21 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+/**
+ * Get current user profile
+ */
+exports.getMe = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        let donorInfo = null;
+        
+        if (user.user_type === 'donor') {
+            donorInfo = await Donor.findByUserId(req.user.id);
+        }
+        
+        res.json({ success: true, user, donor_info: donorInfo });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
