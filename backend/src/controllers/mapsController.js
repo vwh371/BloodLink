@@ -87,3 +87,20 @@ exports.calculateDonorDistance = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+/**
+ * Get hospital suggestions
+ */
+exports.getHospitalSuggestions = async (req, res) => {
+    try {
+        const { lat, lng } = req.query;
+        
+        const hospitals = await GoogleMapsService.findNearbyHospitals(
+            parseFloat(lat), parseFloat(lng), 10000
+        );
+        
+        res.json({ success: true, hospitals: hospitals.success ? hospitals.places : [] });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
