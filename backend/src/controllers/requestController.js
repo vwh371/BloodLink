@@ -49,3 +49,15 @@ exports.getMyRequests = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+/**
+ * Get all pending requests (for donors)
+ */
+exports.getPendingRequests = async (req, res) => {
+    try {
+        const requests = await BloodRequest.getPendingRequests();
+        res.json({ success: true, requests });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
