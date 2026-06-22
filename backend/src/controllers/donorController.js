@@ -33,4 +33,24 @@ exports.registerDonor = async (req, res) => {
         });
         
         res.json({ success: true, message: 'Donor registered successfully' });
-    } 
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+/**
+ * Update donor availability
+ */
+exports.updateAvailability = async (req, res) => {
+    try {
+        const { is_available } = req.body;
+        await Donor.updateAvailability(req.user.id, is_available);
+        res.json({ 
+            success: true, 
+            message: `Availability updated to ${is_available ? 'Available' : 'Not Available'}` 
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
