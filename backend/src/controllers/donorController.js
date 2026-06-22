@@ -66,3 +66,15 @@ exports.getDonorProfile = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+/**
+ * Get all donors (admin only)
+ */
+exports.getAllDonors = async (req, res) => {
+    try {
+        const donors = await Donor.getAllDonors();
+        res.json({ success: true, donors });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
