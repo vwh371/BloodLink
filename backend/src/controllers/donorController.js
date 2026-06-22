@@ -54,3 +54,15 @@ exports.updateAvailability = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+/**
+ * Get donor profile
+ */
+exports.getDonorProfile = async (req, res) => {
+    try {
+        const donor = await Donor.findByUserId(req.user.id);
+        res.json({ success: true, donor });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
